@@ -1,0 +1,14 @@
+config_data:
+  task: [pictureDescription]
+  transcript_version: google
+config_model:
+  model_name: SVR
+  target_variable: [composite_language, composite_memory, composite_executive_function, composite_speed]
+config_demographic_features:
+  selected_features: ["age", "gender_unified", "education_binary", "country", "socioeconomic"]
+debug: false
+model: Regression
+data_transformers:
+- Demographic Features
+data_preprocessors:
+- Feature Standardizer

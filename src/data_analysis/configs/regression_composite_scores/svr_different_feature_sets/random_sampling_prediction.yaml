@@ -1,0 +1,11 @@
+config_data:
+  task: [pictureDescription]
+  transcript_version: google
+config_model:
+  model_name: RandomSampling
+  target_variable: [composite_language, composite_memory, composite_executive_function, composite_speed]
+debug: false
+model: Regression
+data_transformers:
+- Demographic Features
+data_preprocessors: []

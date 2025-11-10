@@ -1,0 +1,23 @@
+config_data:
+  task: [journaling]
+  transcript_version: google
+  split: full
+config_audio_features:
+  feature_version: reduced  # reduced set of features - without too strong correlations
+config_linguistic_features:
+  feature_version: reduced  # reduced set of features - without too strong correlations
+config_model:
+  model_name: SVR
+  target_variable: [composite_language, composite_memory, composite_executive_function, composite_speed]
+  cv_splits: 1
+  calculate_shap: True  # calculate SHAP values
+  log_models_and_data: True  # store detailed data for bias analysis
+debug: false
+model: Regression
+data_transformers:
+- Linguistic Features
+- Audio Features
+- Demographic Features
+data_preprocessors:
+- Outlier Removal and Imputation
+- Feature Standardizer

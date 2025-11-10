@@ -1,0 +1,16 @@
+config_data:
+  task: [cookieTheft]
+  transcript_version: google
+config_linguistic_features:
+  feature_version: reduced  # reduced set of features - without too strong correlations
+config_model:
+  model_name: SVR
+  target_variable: [composite_language, composite_memory, composite_executive_function, composite_speed]
+debug: false
+model: Regression
+data_transformers:
+- Linguistic Features
+- Demographic Features
+data_preprocessors:
+- Outlier Removal and Imputation
+- Feature Standardizer

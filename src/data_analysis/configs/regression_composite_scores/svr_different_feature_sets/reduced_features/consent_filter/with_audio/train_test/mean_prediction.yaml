@@ -1,0 +1,14 @@
+config_data:
+  task: [pictureDescription]
+  transcript_version: google
+  consent_filter: futher_use_with_audio
+  split: full
+config_model:
+  cv_splits: 1
+  model_name: MeanPrediction
+  target_variable: [composite_language, composite_memory, composite_executive_function, composite_speed]
+debug: false
+model: Regression
+data_transformers:
+- Demographic Features
+data_preprocessors: []
