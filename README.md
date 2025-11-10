@@ -10,4 +10,5 @@ As the manuscript is currently in review, the repository might still change and 
 - `src/data_preparation`: Code used in the preparation of the data from Prolific (e.g. automatic transcription)
 - `src/data_analysis`: Data analysis pipeline code for data loading, feature extraction, regression and classification models
 
+Before running, update the constants in `src/config/constants.py`.
 The main entry point for the analyses is `src/data_analysis/run/run.sh`:

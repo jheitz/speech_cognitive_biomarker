@@ -9,7 +9,7 @@ config_model:
   model_name: SVR
   target_variable: composite_language
   calculate_shap: true
-debug: false
+debug: 100
 model: Regression
 data_transformers:
 - Linguistic Features

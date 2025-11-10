@@ -4,7 +4,7 @@ cd ..
 
 ## regression results (SVR) - overview for paper
 #datetime_str=$(date '+%Y%m%d_%H%M')_$(openssl rand -hex 2)
-python -u run_multiple.py --config configs/regression_composite_scores/svr_different_feature_sets/reduced_features/audio.yaml --name audio --results_base_dir ${datetime_str}_svr_reduced_feature_sets
+#python -u run_multiple.py --config configs/regression_composite_scores/svr_different_feature_sets/reduced_features/audio.yaml --name audio --results_base_dir ${datetime_str}_svr_reduced_feature_sets
 #python -u run_multiple.py --config configs/regression_composite_scores/svr_different_feature_sets/reduced_features/linguistic.yaml --name linguistic --results_base_dir ${datetime_str}_svr_reduced_feature_sets
 #python -u run_multiple.py --config configs/regression_composite_scores/svr_different_feature_sets/reduced_features/combined_audio_linguistic.yaml --name combined_audio_linguistic --results_base_dir ${datetime_str}_svr_reduced_feature_sets
 #python -u run_multiple.py --config configs/regression_composite_scores/svr_different_feature_sets/demographics_only.yaml --name demographics_only --results_base_dir ${datetime_str}_svr_reduced_feature_sets
@@ -78,4 +78,4 @@ python -u run_multiple.py --config configs/regression_composite_scores/svr_diffe
 #python -u run_multiple.py --config configs/regression_composite_scores/svr_different_feature_sets/reduced_features/with_socioeconomic/train_test/demographics_only.yaml --name demographics_only --results_base_dir ${datetime_str}_svr_reduced_feature_sets_with_socioeconomic_train_test
 
 
-#python -u run.py --config configs/test.yaml --name test
+python -u run.py --config configs/test.yaml --name test
