@@ -29,7 +29,6 @@ class LinguisticFeatures(DataTransformer):
         # feature groups: which linguistic features to load
         valid_feature_groups = ['stanza_features',
                                 'literature_features',
-                                'LIWC_features',
                                 'csunghye_features']
         try:
             self.feature_groups = self.config.config_linguistic_features.feature_groups
@@ -252,83 +251,6 @@ class LinguisticFeatures(DataTransformer):
 
         return features
 
-    def _find_preprocessed_feature_location(self, feature_group, task, transcript_version):
-        """
-        Find location of features pre-calculated by external services, such as using R script or LIWC.
-        This depends on which exact dataset we're looking at, which in turn depends on
-        data transformers used in the current pipeline. This is why there's a bit of logic here
-        """
-        assert feature_group in ['R', 'LIWC']
-
-        # base location where all output of R preprocessing is stored
-        if feature_group == 'R':
-            # feature_location_base = os.path.join(self.CONSTANTS.PREPROCESSED_DATA, "R_preprocessing", "koRpus")
-            raise NotImplementedError()
-        elif feature_group == 'LIWC':
-            feature_location_base = os.path.join(self.CONSTANTS.RESOURCES_DIR, "LIWC")
-
-        feature_dir = os.path.join(feature_location_base, transcript_version, task)
-
-        assert os.path.isdir(feature_dir), f"Feature directory does not exist, have the features been preprocessed? For feature {feature_group} and feature_dir {feature_dir}"
-        return feature_dir
-
-    def _delete_liwc_features_with_many_missing_values(self, features):
-        # delete liwc features that have more than 10% missing values
-        missing_value_statistics = features.isna().sum(axis=0) / features.shape[0]
-        threshold = 0.1
-        high_fraction_missing_values = missing_value_statistics[missing_value_statistics > threshold]
-        if len(high_fraction_missing_values) > 0:
-            print(f"Removing {len(high_fraction_missing_values)} LIWC features with high fraction of missing values: {list(high_fraction_missing_values.index)}")
-            return features.drop(columns=high_fraction_missing_values.index)
-        else:
-            return features
-
-    def _load_LIWC_features(self, dataset):
-        # find file in feature_location, depending on task and transcript_version
-        task = self.config.config_data.task
-        transcript_version = self.config.config_data.transcript_version
-
-        feature_location = self._find_preprocessed_feature_location('LIWC', task, transcript_version)
-        feature_file_path = os.path.join(feature_location, f"LIWC-22 Results - transcripts - LIWC Analysis.csv")
-        features = pd.read_csv(feature_file_path)
-        features.sample_name = features.sample_name.astype('int')
-
-        # select samples names (and in correct order)
-        sample_names_df = pd.DataFrame({'sample_name': dataset.sample_names.astype(int)})
-        features = pd.merge(sample_names_df, features, on='sample_name', how='left')
-        # the above merge should preserve the order of dataset.sample_names, but let's make sure...
-        assert np.all(features.sample_name.astype('int') == dataset.sample_names.astype(int))
-
-        # transcripts should match - otherwise the wrong LIWC features are loaded
-        transcripts_same = pd.DataFrame({
-            'f_t': features.transcript.dropna(),
-            'd_t': pd.Series(dataset.transcripts).dropna(),
-            'same': features.transcript.dropna() == pd.Series(dataset.transcripts).dropna()
-        })
-        assert transcripts_same.query("same == False").shape[0] == 0
-
-        # keep only actual features, but set index as sample_name
-        features.index = features['sample_name'].astype(str)
-        features = features.drop(columns=['sample_name', 'transcript'])
-
-        if self.feature_version == 'reduced':
-            # let's keep only the features with strongest effect sizes, and without any strong correlations
-            # see /analyses/kw49/reduced_features/liwc_features_reduce_number.ipynb
-            # WC is also removed, it's the same as lit_n_counts
-            features_to_keep = ['prep', 'space', 'power', 'allure', 'number', 'verb', 'Dic', 'i', 'discrep',
-                                'focuspast', 'Affect', 'home', 'Social', 'health', 'OtherP', 'Drives']
-            features = features[features_to_keep]
-
-
-        # rename features with "liwc" prefix, to recognise them in the complete list
-        features = features.rename(columns={col: "liwc_"+col for col in features.columns})
-
-        features = self._delete_liwc_features_with_many_missing_values(features)
-
-        features = [features.loc[str(sample_name)].to_dict() for sample_name in dataset.sample_names]
-
-        return features
-
     def _print_parse_trees_and_pos_tags(self, dataset: Dataset):
         for sample_name, text in zip(dataset.sample_names, dataset.transcripts):
             if pd.isna(text):
@@ -430,8 +352,6 @@ class LinguisticFeatures(DataTransformer):
                 features_collected.append(self._calculate_stanza_features(dataset))
             elif feature_group == 'literature_features':
                 features_collected.append(self._load_literature_features(dataset))
-            elif feature_group == 'LIWC_features':
-                features_collected.append(self._load_LIWC_features(dataset))
             elif feature_group == 'csunghye_features':
                 features_collected.append(self._load_csunghye_features(dataset))
             else:
@@ -452,10 +372,6 @@ class LinguisticFeatures(DataTransformer):
             all_features = [{feature: sample[feature] for feature in sample if feature in self.selected_features} for sample in all_features]
 
         features_df = pd.DataFrame(all_features)
-
-        # todo: remove this line again, the feature has been removed in the calculation above, but due to caching, we keep this line for a while to avoid having to re-calculate everything...
-        if 'lit_adjective_ratio' in features_df.columns:
-            features_df = features_df.drop(columns=['lit_adjective_ratio'])
 
         config_without_transformers = {key: dataset.config[key] for key in dataset.config if key != 'data_transformers'}
         new_config = {
