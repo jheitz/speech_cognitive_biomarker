@@ -417,7 +417,6 @@ class Regression(BaseModel):
         demographics, _ = prepare_demographics(self.data.demographics)
 
         regression_df = pd.concat([
-            self.data.cca_component_scores.reset_index(drop=True),
             self.data.factor_scores.reset_index(drop=True),
             self.data.factor_scores_theory.reset_index(drop=True),
             self.data.cognitive_overall_score.reset_index(drop=True),

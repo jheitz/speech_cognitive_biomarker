@@ -84,18 +84,6 @@ class DataLoader:
         mean = df[cognitive_cols].mean(axis=1)
         return pd.DataFrame({'cognition_mean': mean, 'sample_name': df.sample_name})
 
-    def _prepare_cca_component_scores(self, sample_names):
-        # CCA component scores for split2 of the data
-        # Extend to all sample names to make checks pass
-        try:
-            cca_component_version = self.config.config_data.cca_component_version
-        except:
-            cca_component_version = '20241112_1525' # from /luha-prolific-study/results/runs_luha/2024_kw46/20241112_1525_pictureDescription_CCA_linguistic_audio_vquk
-        cca_component_scores = pd.read_csv(os.path.join(self.CONSTANTS.RESOURCES_DIR, f"cca_component_scores_{cca_component_version}.csv"))
-        cca_component_scores['sample_name'] = cca_component_scores['sample_name'].astype(str)
-        cca_component_scores = cca_component_scores.merge(pd.DataFrame({'sample_name': sample_names}).astype(str), on="sample_name", how="outer")
-        return cca_component_scores
-
     def _split_transcripts(self, transcriptions_df, version):
         assert version in ['google', 'whisper']
         relevant_cols = ['task', 'sample_name', f"text_{version}"]
@@ -191,9 +179,6 @@ class DataLoader:
         cognitive_overall_score = self._prepare_cognitive_overall_score(acs_outcomes_imputed, language_task_scores)
         cognitive_overall_score =  self._preprocess_pandas_data(cognitive_overall_score, sample_names)
 
-        cca_component_scores = self._prepare_cca_component_scores(sample_names)
-        cca_component_scores = self._preprocess_pandas_data(cca_component_scores, sample_names)
-
         if self.transcript_version == 'google':
             transcripts = transcriptions_google
         elif self.transcript_version == 'whisper':
@@ -247,7 +232,7 @@ class DataLoader:
                           factor_scores=factor_scores, factor_scores_theory=factor_scores_theory,
                           cognitive_overall_score=cognitive_overall_score, transcriptions_google=transcriptions_google,
                           transcriptions_whisper=transcriptions_whisper, transcripts=transcripts_numpy,
-                          cca_component_scores=cca_component_scores, data_split=datasplit_assignment,
+                          data_split=datasplit_assignment,
                           mean_composite_cognitive_score=mean_composite_cognitive_score)
 
         if self.data_split == 'full':
