@@ -1,17 +1,24 @@
 config_data:
-  task: cookieTheft
+  task: pictureDescription
   transcript_version: google
 config_audio_features:
+  feature_groups:
+  - opensmile_features
+  - pause_features
+  - phoneme_features
   feature_version: reduced  # reduced set of features - without too strong correlations
 config_linguistic_features:
+  feature_groups:
+  - csunghye_features
+  - literature_features
+  #- LIWC_features
   feature_version: reduced  # reduced set of features - without too strong correlations
 config_model:
-  model_name: SVR
+  model_name: LogisticRegression
   target_variable: composite_language
-  #calculate_shap: true
-  #cv_splits: 2
+  classification_labels: negative_outliers
 debug: false
-model: Regression
+model: Classification
 data_transformers:
 - Linguistic Features
 - Audio Features
