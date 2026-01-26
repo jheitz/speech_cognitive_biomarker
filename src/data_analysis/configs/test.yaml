@@ -8,8 +8,9 @@ config_linguistic_features:
 config_model:
   model_name: SVR
   target_variable: composite_language
-  calculate_shap: true
-debug: 100
+  #calculate_shap: true
+  #cv_splits: 2
+debug: false
 model: Regression
 data_transformers:
 - Linguistic Features

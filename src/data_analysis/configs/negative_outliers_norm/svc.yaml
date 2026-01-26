@@ -1,0 +1,20 @@
+config_data:
+  task: [pictureDescription]
+  transcript_version: google
+config_audio_features:
+  feature_version: reduced  # reduced set of features - without too strong correlations
+config_linguistic_features:
+  feature_version: reduced  # reduced set of features - without too strong correlations
+config_model:
+  model_name: SVC
+  target_variable: [composite_language, composite_memory, composite_executive_function, composite_speed]
+  classification_labels: negative_outliers
+debug: false
+model: Classification
+data_transformers:
+- Linguistic Features
+- Audio Features
+- Demographic Features
+data_preprocessors:
+- Outlier Removal and Imputation
+- Feature Standardizer

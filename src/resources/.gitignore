@@ -1,0 +1,6 @@
+# Don't include csunghye_all_measures_raw in git due to copyright reasons
+csunghye_all_measures_raw.csv
+# don't include original composite cognitive scores (= factor scores), as not all participants consented to share these
+# the scores of the participants who did consent are included in
+# data/composite_cognitive_scores.csv (which is standardized to zero mean and unit variance per score)
+factor_scores_theory_2025-01-07-1929.csv

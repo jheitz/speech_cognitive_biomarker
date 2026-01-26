@@ -218,7 +218,7 @@ class BiasAnalysis:
 
 
     def bias_analysis(self, predictions, targets, sample_names, metric_name,
-                      criteria=("age", 'gender_unified', 'education_binary', 'country', 'target'),  # 'ethnicity'
+                      criteria=("age", 'gender_unified', 'education_binary', 'country'),  # 'ethnicity', 'target'
                       plot_path=None, figsize=None, title=None):
         """
         :param predictions (1d): predicted scores

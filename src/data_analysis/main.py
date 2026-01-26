@@ -14,11 +14,8 @@ from data_analysis.model.classification import Classification
 from util.helpers import create_directory
 from data_analysis.dataloader.dataloader import DataLoader, ADReSSDataLoader
 from data_analysis.data_transformation.linguistic_features import LinguisticFeatures
-from data_analysis.data_transformation.cognitive_residuals import CognitiveResiduals
-from data_analysis.data_transformation.feature_residuals import FeatureResiduals
 from data_analysis.data_transformation.audio_features import AudioFeatures
 from data_analysis.data_transformation.demographic_features import DemographicFeatures
-from data_analysis.data_transformation.forced_alignment_word_timestamps import ForcedAlignmentWordTimestamps
 
 
 
@@ -51,16 +48,10 @@ def run(run_parameters: RunParameters, config: Config, CONSTANTS: Constants):
         for p in config.data_transformers:
             if p == "Linguistic Features":
                 data_transformers.append(LinguisticFeatures(config=config, constants=CONSTANTS, run_parameters=run_parameters))
-            elif p == "Cognitive Residuals":
-                data_transformers.append(CognitiveResiduals(config=config, constants=CONSTANTS, run_parameters=run_parameters))
-            elif p == "Feature Residuals":
-                data_transformers.append(FeatureResiduals(config=config, constants=CONSTANTS, run_parameters=run_parameters))
             elif p == "Audio Features":
                 data_transformers.append(AudioFeatures(config=config, constants=CONSTANTS, run_parameters=run_parameters))
             elif p == "Demographic Features":
                 data_transformers.append(DemographicFeatures(config=config, constants=CONSTANTS, run_parameters=run_parameters))
-            elif p == "Force Alignment Word Timestamps":
-                data_transformers.append(ForcedAlignmentWordTimestamps(config=config, constants=CONSTANTS, run_parameters=run_parameters))
             elif p == "Outlier Removal and Imputation" or p == "Feature Standardizer":
                 raise ValueError(f"{p} is no longer a data transformer. Instead it is implemented as a preprocessing step. This is to avoid data leakage (should not be run on the entire dataset). Update the config accordingly.")
             else:
