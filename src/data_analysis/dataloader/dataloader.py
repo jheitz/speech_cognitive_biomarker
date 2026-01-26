@@ -163,7 +163,7 @@ class DataLoader:
         try:
             factor_scores_theory_version = self.config.config_data.factor_scores_theory_version
         except:
-            factor_scores_theory_version = '2025-01-07-1929' # '2025-01-07-1929' (v10) '2024-11-20-1247' (v8) # '2024-11-14-1135' (v4)  #'2024-11-11-1737' (v3)     # 2024-11-11-1036  2024-11-11-1644
+            factor_scores_theory_version = '2025-01-07-1929'
         print(f"Using theory factor scores version {factor_scores_theory_version}")
         factor_scores_theory = pd.read_csv(os.path.join(self.CONSTANTS.RESOURCES_DIR, f"factor_scores_theory_{factor_scores_theory_version}.csv"))
         composite_score_columns = [c for c in factor_scores_theory.columns if c != 'study_submission_id']

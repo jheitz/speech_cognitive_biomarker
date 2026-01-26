@@ -15,7 +15,7 @@ from data_analysis.data_preprocessing.base_data_preprocessor import BasePreproce
 class FeatureOutlierRemovalImputation(BasePreprocessor):
     """
     Remove outliers and impute missing values
-    Based on /luha-prolific-study/src/data_preparation/preparation_logic/ACS_outlier_removal_imputation.py
+    Based on /src/data_preparation/preparation_logic/ACS_outlier_removal_imputation.py
 
     We implement this in a sklearn-style way, with a fit / transform method
     This is important to avoid data leakage: e.g. the norms should only be fit on the train data, not on the test data
