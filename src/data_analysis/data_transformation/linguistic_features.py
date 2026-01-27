@@ -314,6 +314,7 @@ class LinguisticFeatures(DataTransformer):
 
     def _load_csunghye_features(self, dataset):
         # get lexical measures to use
+        # note that the csunghye_all_measures_raw.csv is not available for copyright reasons, contact the original authors to get access to it
         lexical_lookup_filepath = os.path.join(self.CONSTANTS.RESOURCES_DIR, 'csunghye_all_measures_raw.csv')
         self.csunghye_static = types.SimpleNamespace(
             measureDict=pd.read_csv(lexical_lookup_filepath),

@@ -9,8 +9,8 @@ class Constants:
     the local / remote version can be accessed using Constants().LOCAL.CONSTANT_NAME / Constants().REMOTE.CONSTANT_NAME
     """
     def __init__(self, local=None, recursion=True):
-        git_dir_remote = "/home/ubuntu/git/luha-prolific-study"
-        git_dir_local = "/Users/jheitz/git/luha-prolific-study"
+        git_dir_remote = "/home/ubuntu/git/speech_cognitive_biomarker"
+        git_dir_local = "/Users/jheitz/git/speech_cognitive_biomarker"
 
         if local is not None:
             self.local = local
@@ -25,7 +25,6 @@ class Constants:
         mounted_methlab_remote = "/home/ubuntu/methlab/Students/Jonathan/"
         if self.local:
             mounted_methlab_remote = "/Volumes/methlab/Students/Jonathan/local"
-        mounted_methlab_data_remote = "/home/ubuntu/methlab_data/LanguageHealthyAging/"
 
         # Git branch where code snapshots are committed and pushed to by src/run/run.py
         self.EXPERIMENT_BRANCH = 'experiments'
@@ -47,10 +46,10 @@ class Constants:
         #self.DATA_PROCESSED_COMBINED = os.path.join(mounted_methlab_data_remote)
         self.DATA_INTERMEDIATES = os.path.join(mounted_methlab_remote, "data_intermediates", "prolificStudy")
         if self.local:
-            self.DATA_RAW = os.path.join(self.GIT_DIR, "data", "raw")
-            self.DATA_PROCESSED = os.path.join(self.GIT_DIR, "data", "processed")
-            self.DATA_PROCESSED_COMBINED = os.path.join(self.GIT_DIR, "data", "processed_combined")
-            self.DATA_INTERMEDIATES = os.path.join(self.GIT_DIR, "data", "intermediates")
+            self.DATA_RAW = os.path.join("/Users/jheitz/git/luha-prolific-study", "data", "raw")
+            self.DATA_PROCESSED = os.path.join("/Users/jheitz/git/luha-prolific-study", "data", "processed")
+            self.DATA_PROCESSED_COMBINED = os.path.join("/Users/jheitz/git/luha-prolific-study", "data", "processed_combined")
+            self.DATA_INTERMEDIATES = os.path.join("/Users/jheitz/git/luha-prolific-study", "data", "intermediates")
 
         self.TRAIN_TEST_DATASPLIT = os.path.join(self.RESOURCES_DIR, "train_test_split_2025-01-08_17-03.csv")  # based on demographics & cognition
         self.SPLIT1_SPLIT2_DATASPLIT = os.path.join(self.RESOURCES_DIR, "data_split_2024-07-10_16-11.csv")
