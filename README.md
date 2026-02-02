@@ -1,6 +1,10 @@
 # Code and data for "Towards a speech-based digital biomarker for cognitive impairment: speech as a proxy for cognitive assessment" 
 
-This repository contains code and data for the npj Digital Medicine paper entitled "Towards a speech-based digital biomarker for cognitive impairment: speech as a proxy for cognitive assessment" (Heitz, Engler, Langer, 2025)
+This repository contains code and data for the npj Digital Medicine paper:
+
+Heitz, J., Engler, I.M. & Langer, N. Towards a speech-based digital biomarker for cognitive impairment: speech as a proxy for cognitive assessment. _npj Digit. Med._ (2026). https://doi.org/10.1038/s41746-026-02360-8
+
+
 
 ## Repository structure
 - `analyses/`: Jupyter notebooks for the analyses of results, figures and tables in the manuscript
@@ -14,4 +18,4 @@ The main entry point for the analyses is `src/data_analysis/run/run.sh`.
 
 Note: The code currently depends on the original data. 
 To reproduce the results on the subset of participants in `/data`, the code needs to be changed to load this data, 
-which has as different structure..
+which has as different structure.
