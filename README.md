@@ -9,8 +9,8 @@ Heitz, J., Engler, I.M. & Langer, N. Towards a speech-based digital biomarker fo
 ## Repository structure
 - `analyses/`: Jupyter notebooks for the analyses of results, figures and tables in the manuscript
 - `conda/`: `environment.yaml` file for conda environment setup
-- `data/`: Cognitive test results and speech-derived feature values of a subset of participants (n=837). See Data Availability statement in the manuscript for details.
-- `src/data_preparation`: Code used in the preparation of the data from Prolific (e.g. automatic transcription, data quality checks)
+- `data/`: Cognitive test results and speech-derived feature values of a subset of participants (n=837). See Data Availability statement in the paper for details.
+- `src/data_preparation`: Code used in the preparation of the raw data from Prolific / ACS / study web server (e.g. automatic transcription of audio files, data quality checks)
 - `src/data_analysis`: Data analysis pipeline code for data loading, feature extraction, regression and classification models
 
 Before running, update the constants in `src/config/constants.py`. 
